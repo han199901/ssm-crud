@@ -8,6 +8,17 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="d_id" jdbcType="INTEGER" property="dId" />
   </resultMap>
+  <resultMap id="WithDeptBaseResultMap" type="com.han.crud.bean.Employee">
+    <id column="emp_id" jdbcType="INTEGER" property="empId" />
+    <result column="emp_name" jdbcType="VARCHAR" property="empName" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="d_id" jdbcType="INTEGER" property="dId" />
+    <association property="department" javaType="com.han.crud.bean.Department">
+      <id column="d_id" property="deptId"/>
+      <result column="dept_name" property="deptName"/>
+    </association>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -69,6 +80,30 @@
   <sql id="Base_Column_List">
     emp_id, emp_name, gender, email, d_id
   </sql>
+  <sql id="With_Dept_Base_Column_List">
+    emp_id, emp_name, gender, email, d_id, dept_name
+  </sql>
+  <select id="selectByExampleWithDept" parameterType="com.han.crud.bean.EmployeeExample" resultMap="WithDeptBaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="With_Dept_Base_Column_List" />
+    from tbl_emp LEFT JOIN tbl_dept ON	d_id=dept_id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKeyWithDept" parameterType="java.lang.Integer" resultMap="WithDeptBaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_emp LEFT JOIN tbl_dept ON	d_id=dept_id
+    where emp_id = #{empId,jdbcType=INTEGER}
+  </select>
+
   <select id="selectByExample" parameterType="com.han.crud.bean.EmployeeExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

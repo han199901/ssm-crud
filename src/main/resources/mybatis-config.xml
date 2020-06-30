@@ -11,10 +11,10 @@
     <typeAliases>
         <package name="com.han.crud.bean"/>
     </typeAliases>
-    <plugins>
+<!--    <plugins>
         <plugin interceptor="com.github.pagehelper.PageInterceptor">
-            <!--分页参数合理化-->
+            &lt;!&ndash;分页参数合理化&ndash;&gt;
             <property name="reasonable" value="true"/>
         </plugin>
-    </plugins>
+    </plugins>-->
 </configuration>

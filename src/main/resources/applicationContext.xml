@@ -27,6 +27,10 @@
         <property name="dataSource" ref="pooledDataSource"></property>
         <property name="mapperLocations" value="classpath:mapper/*.xml"></property>
     </bean>
+    <bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+        <constructor-arg name="executorType" value="BATCH" />
+    </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.han.crud.dao"></property>
     </bean>
